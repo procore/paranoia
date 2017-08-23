@@ -1175,8 +1175,6 @@ end
 class ParentModelWithRecoveryWindow < ActiveRecord::Base
   acts_as_paranoid(recovery_window: 10.minutes)
 
-  # parent_model_with_recovery_windows
-
   has_many :paranoid_models, foreign_key: 'parent_model_id'
   has_many :related_models, foreign_key: 'parent_model_id'
   has_many :very_related_models, class_name: 'RelatedModel', foreign_key: 'parent_model_id', dependent: :destroy
