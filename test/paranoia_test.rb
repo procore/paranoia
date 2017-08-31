@@ -14,7 +14,6 @@ def setup!
   {
     'parent_model_with_counter_cache_columns' => 'related_models_count INTEGER DEFAULT 0',
     'parent_models' => 'deleted_at DATETIME',
-    'parent_model_with_recovery_windows' => 'deleted_at DATETIME',
     'paranoid_models' => 'parent_model_id INTEGER, deleted_at DATETIME',
     'paranoid_model_with_belongs' => 'parent_model_id INTEGER, deleted_at DATETIME, paranoid_model_with_has_one_id INTEGER',
     'paranoid_model_with_build_belongs' => 'parent_model_id INTEGER, deleted_at DATETIME, paranoid_model_with_has_one_and_build_id INTEGER, name VARCHAR(32)',
@@ -642,7 +641,7 @@ class ParanoiaTest < test_framework
     parent.destroy
     second_child.update(deleted_at: parent.deleted_at + 11.minutes)
 
-    parent.restore!(:recursive => true)
+    parent.restore!(:recursive => true, recovery_window: 12.minutes)
     assert_equal true, parent.deleted_at.nil?
     assert_equal true, first_child.reload.deleted_at.nil?
     assert_equal true, second_child.reload.deleted_at.nil?
@@ -660,7 +659,7 @@ class ParanoiaTest < test_framework
     first_child.update(deleted_at: parent.deleted_at - 11.minutes)
     second_child.update(deleted_at: parent.deleted_at - 9.minutes)
 
-    ParentModel.restore(parent.id, :recursive => true)
+    ParentModelWithRecoveryWindow.restore(parent.id, :recursive => true)
     assert_equal true, parent.reload.deleted_at.nil?
     assert_equal false, first_child.reload.deleted_at.nil?
     assert_equal true, second_child.reload.deleted_at.nil?
@@ -1173,8 +1172,8 @@ class ParentModel < ActiveRecord::Base
 end
 
 class ParentModelWithRecoveryWindow < ActiveRecord::Base
-  acts_as_paranoid(recovery_window: 10.minutes)
-
+  self.table_name = 'parent_models'
+  acts_as_paranoid recovery_window: 10.minutes
   has_many :paranoid_models, foreign_key: 'parent_model_id'
   has_many :related_models, foreign_key: 'parent_model_id'
   has_many :very_related_models, class_name: 'RelatedModel', foreign_key: 'parent_model_id', dependent: :destroy
