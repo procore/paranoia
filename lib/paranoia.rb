@@ -262,8 +262,6 @@ ActiveSupport.on_load(:active_record) do
       self.paranoia_sentinel_value = options.fetch(:sentinel_value) { Paranoia.default_sentinel_value }
       self.paranoia_recovery_window = options.fetch(:recovery_window) { Paranoia.default_recovery_window }
 
-      binding.pry if options.any?
-      
       def self.paranoia_scope
         where(paranoia_column => paranoia_sentinel_value)
       end
