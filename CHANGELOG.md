@@ -1,5 +1,45 @@
 # paranoia Changelog
 
+## 2.4.3
+
+* [#503](https://github.com/rubysherpas/paranoia/pull/503) Bump activerecord dependency for Rails 6.1
+
+  [Jörg Schiller](https://github.com/joergschiller)
+
+* [#483](https://github.com/rubysherpas/paranoia/pull/483) Update JRuby version to 9.2.8.0 + remove EOL Ruby 2.2 
+
+  [Uwe Kubosch](https://github.com/donv)
+
+* [#482](https://github.com/rubysherpas/paranoia/pull/482) Fix after_commit for Rails 6
+
+  [Ashwin Hegde](https://github.com/hashwin)
+
+## 2.4.2
+
+* [#470](https://github.com/rubysherpas/paranoia/pull/470) Add support for ActiveRecord 6.0
+
+  [Anton Kolodii](https://github.com/iggant), [Jared Norman](https://github.com/jarednorman)
+
+## 2.4.1
+
+* [#435](https://github.com/rubysherpas/paranoia/pull/435) Monkeypatch activerecord relations to work with rails 5.2.0
+
+  [Bartosz Bonisławski (@bbonislawski)](https://github.com/bbonislawski)
+
+## 2.4.0
+
+* [#423](https://github.com/rubysherpas/paranoia/pull/423) Add `paranoia_destroy` and `paranoia_delete` aliases
+
+  [John Hawthorn (@jhawthorn)](https://github.com/jhawthorn)
+
+* [#408](https://github.com/rubysherpas/paranoia/pull/408) Fix instance variable `@_disable_counter_cache` not initialized warning.
+
+  [Akira Matsuda (@amatsuda)](https://github.com/amatsuda)
+
+* [#412](https://github.com/rubysherpas/paranoia/pull/412) Fix `really_destroy!` behavior with `sentinel_value`
+
+  [Steve Rice (@steverice)](https://github.com/steverice)
+
 ## 2.3.1
 
 * [#397](https://github.com/rubysherpas/paranoia/pull/397) Bump active record max version to support 5.1 final

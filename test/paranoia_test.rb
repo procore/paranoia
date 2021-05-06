@@ -5,6 +5,10 @@ require 'paranoia'
 
 test_framework = defined?(MiniTest::Test) ? MiniTest::Test : MiniTest::Unit::TestCase
 
+if ActiveRecord::Base.respond_to?(:raise_in_transactional_callbacks=)
+  ActiveRecord::Base.raise_in_transactional_callbacks = true
+end
+
 def connect!
   ActiveRecord::Base.establish_connection :adapter => 'sqlite3', database: ':memory:'
 end
@@ -127,6 +131,21 @@ class ParanoiaTest < test_framework
     assert model.instance_variable_get(:@after_commit_callback_called)
   end
 
+  def test_destroy_behavior_for_freshly_loaded_plain_models_callbacks
+    model = CallbackModel.new
+    model.save
+
+    model = CallbackModel.find(model.id)
+    model.destroy
+
+    assert_nil model.instance_variable_get(:@update_callback_called)
+    assert_nil model.instance_variable_get(:@save_callback_called)
+    assert_nil model.instance_variable_get(:@validate_called)
+
+    assert model.instance_variable_get(:@destroy_callback_called)
+    assert model.instance_variable_get(:@after_destroy_callback_called)
+    assert model.instance_variable_get(:@after_commit_callback_called)
+  end
 
   def test_delete_behavior_for_plain_models_callbacks
     model = CallbackModel.new
@@ -544,6 +563,14 @@ class ParanoiaTest < test_framework
     model.really_destroy!
 
     assert model.instance_variable_get(:@real_destroy_callback_called)
+  end
+
+  def test_really_destroy_behavior_for_active_column_model
+    model = ActiveColumnModel.new
+    model.save
+    model.really_destroy!
+
+    refute ParanoidModel.unscoped.exists?(model.id)
   end
 
   def test_really_delete
