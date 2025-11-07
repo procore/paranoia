@@ -1,3 +1,12 @@
+[![Gem Version](https://badge.fury.io/rb/paranoia.svg)](https://badge.fury.io/rb/paranoia)
+[![build](https://github.com/rubysherpas/paranoia/actions/workflows/build.yml/badge.svg)](https://github.com/rubysherpas/paranoia/actions/workflows/build.yml)
+
+**Notice:**
+
+`paranoia` has some surprising behaviour (like overriding ActiveRecord's `delete` and `destroy`) and is not recommended for new projects. See [`discard`'s README](https://github.com/jhawthorn/discard#why-not-paranoia-or-acts_as_paranoid) for more details.
+
+Paranoia will continue to accept bug fixes and support new versions of Rails but isn't accepting new features.
+
 # Paranoia
 
 Paranoia is a re-implementation of [acts\_as\_paranoid](http://github.com/ActsAsParanoid/acts_as_paranoid) for Rails 3/4/5, using much, much, much less code.
@@ -94,6 +103,14 @@ If you really want it gone *gone*, call `really_destroy!`:
 # => client
 ```
 
+If you need skip updating timestamps for deleting records, call `really_destroy!(update_destroy_attributes: false)`.
+When we call `really_destroy!(update_destroy_attributes: false)` on the parent `client`, then each child `email` will also have `really_destroy!(update_destroy_attributes: false)` called.
+
+``` ruby
+>> client.really_destroy!(update_destroy_attributes: false)
+# => client
+```
+
 If you want to use a column other than `deleted_at`, you can pass it as an option:
 
 ``` ruby
@@ -184,9 +201,22 @@ client.restore(:recursive => true)
 If you want to restore a record and only those dependently destroyed associated records that were deleted within 2 minutes of the object upon which they depend:
 
 ``` ruby
-Client.restore(id, :recursive => true. :recovery_window => 2.minutes)
+Client.restore(id, :recursive => true, :recovery_window => 2.minutes)
 # or
 client.restore(:recursive => true, :recovery_window => 2.minutes)
+```
+
+If you want to trigger an after_commit callback when restoring a record:
+
+``` ruby
+class Client < ActiveRecord::Base
+  acts_as_paranoid after_restore_commit: true
+
+  after_commit          :commit_called, on: :restore
+  # or
+  after_restore_commit  :commit_called
+  ...
+end
 ```
 
 Note that by default paranoia will not prevent that a soft destroyed object can't be associated with another object of a different model.
@@ -329,6 +359,21 @@ end
 # => 0
 >> Email.with_deleted.where(client_id: client.id).count
 # => NoMethodError: undefined method `with_deleted' for #<Class:0x0123456>
+```
+
+#### delete_all:
+
+The gem supports `delete_all` method, however it is disabled by default, to enable it add this in your `environment` file
+
+``` ruby
+Paranoia.delete_all_enabled = true
+```
+alternatively, you can enable/disable it for specific models as follow:
+
+``` ruby
+class User < ActiveRecord::Base
+  acts_as_paranoid(delete_all_enabled: true)
+end
 ```
 
 ## Acts As Paranoid Migration

@@ -1,5 +1,133 @@
 # paranoia Changelog
 
+## 3.1.0 - November 7, 2025
+
+- [#580](https://github.com/rubysherpas/paranoia/issues/580) Support Rails 8.0 and 8.1
+- Update activerecord dependency to `'>= 7', '< 8.2'`
+- Update minimum Ruby version to 3.1
+- Drop support for Rails 6.x
+- Drop support for Ruby 2.7 and 3.0
+- Add Rails 8.0 and 8.1 to CI test matrix
+
+## 3.0.1 - January 19, 2025
+
+- [#566](https://github.com/rubysherpas/paranoia/pull/566) Handle #delete_all
+- [#559](https://github.com/rubysherpas/paranoia/pull/559) Trigger an after_commit callback when restoring a record
+- [#567](https://github.com/rubysherpas/paranoia/pull/567) Fix typo in newly added readme
+
+## 3.0.0 - August 13, 2024
+
+_Tagged as 3.0 as Ruby + Rails version constraints have been modernised._
+
+- [#564](https://github.com/rubysherpas/paranoia/pull/564) Support Rails edge
+- [#563](https://github.com/rubysherpas/paranoia/pull/563) Support Rails 7.2
+
+## 2.6.4 - July 20, 2024
+
+* [#554](https://github.com/rubysherpas/paranoia/pull/554) Support prebuilt counter cache association list (#554)
+  [Joé Dupuis](https://github.com/JoeDupuis)
+* [#551](https://github.com/rubysherpas/paranoia/pull/551) Fix: restore has_one with scope (#551)
+  [Paweł Charyło](https://github.com/zygzagZ)
+* [#555](https://github.com/rubysherpas/paranoia/pull/555) 📝 Add Yard documentation for Paranoia::Query (#555)
+  [Clément Prod'homme](https://github.com/cprodhomme)
+
+## 2.6.3 - Oct 12, 2023
+
+* [#548](https://github.com/rubysherpas/paranoia/pull/548) Add support for [Rails 7.1](https://github.com/rails/rails/releases/tag/v7.1.0) (#548)
+  [Indyarocks](https://github.com/indyarocks)
+
+## 2.6.2 - Jun 6, 2023
+
+* [#441](https://github.com/rubysherpas/paranoia/pull/441) Recursive restore with has_many/one through assocs (#441)
+  [Emil Ong](https://github.com/emilong)
+
+## 2.6.1 - Nov 16, 2022
+
+* [#535](https://github.com/rubysherpas/paranoia/pull/535) Allow to skip updating paranoia_destroy_attributes for records while really_destroy!
+  [Anton Bogdanov](https://github.com/kortirso)
+
+## 2.6.0 - Mar 23, 2022
+
+* [#512](https://github.com/rubysherpas/paranoia/pull/512) Quote table names; Mysql 8 has keywords that might match table names which cause an exception.
+* [#476](https://github.com/rubysherpas/paranoia/pull/476) Fix syntax error in documentation.
+* [#485](https://github.com/rubysherpas/paranoia/pull/485) Rollback transaction if destroy aborted.
+* [#522](https://github.com/rubysherpas/paranoia/pull/522) Add failing tests for association with abort on destroy.
+* [#513](https://github.com/rubysherpas/paranoia/pull/513) Fix create callback called on destroy.
+
+## 2.5.3
+
+* [#532](https://github.com/rubysherpas/paranoia/pull/532) Fix: correct bug when sentinel_value is not a timestamp
+  [Hassanin Ahmed](https://github.com/sas1ni69)
+* [#531](https://github.com/rubysherpas/paranoia/pull/531) Added test case to reproduce bug introduce in v2.5.1
+  [Sherif Elkassaby](https://github.com/sherif-nedap)
+* [#529](https://github.com/rubysherpas/paranoia/pull/529) Fix: Do not define a RSpec matcher when RSpec isn't present
+  [Sebastian Welther](https://github.com/swelther)
+
+## 2.5.2
+
+* [#526](https://github.com/rubysherpas/paranoia/pull/526) Do not include tests files in packaged gem
+
+  [Jason Fleetwood-Boldt](https://github.com/jasonfb)
+* [#492](https://github.com/rubysherpas/paranoia/pull/492) Warn if acts_as_paranoid is called more than once on the same model
+
+  [Ignatius Reza](https://github.com/ignatiusreza)
+
+## 2.5.1
+
+* [#481](https://github.com/rubysherpas/paranoia/pull/481) Replaces hard coded `deleted_at` with `paranoia_column`.
+
+  [Hassanin Ahmed](https://github.com/sas1ni69)
+
+## 2.5.0
+
+ * [#516](https://github.com/rubysherpas/paranoia/pull/516) Add support for ActiveRecord 7.0, drop support for EOL Ruby < 2.5 and Rails < 5.1
+    adding support for Rails 7
+
+   [Mathieu Jobin](https://github.com/mathieujobin)
+ * [#515](https://github.com/rubysherpas/paranoia/pull/515) Switch from Travis CI to GitHub Actions
+
+   [Shinichi Maeshima](https://github.com/willnet)
+
+## 2.4.3
+
+* [#503](https://github.com/rubysherpas/paranoia/pull/503) Bump activerecord dependency for Rails 6.1
+
+  [Jörg Schiller](https://github.com/joergschiller)
+
+* [#483](https://github.com/rubysherpas/paranoia/pull/483) Update JRuby version to 9.2.8.0 + remove EOL Ruby 2.2
+
+  [Uwe Kubosch](https://github.com/donv)
+
+* [#482](https://github.com/rubysherpas/paranoia/pull/482) Fix after_commit for Rails 6
+
+  [Ashwin Hegde](https://github.com/hashwin)
+
+## 2.4.2
+
+* [#470](https://github.com/rubysherpas/paranoia/pull/470) Add support for ActiveRecord 6.0
+
+  [Anton Kolodii](https://github.com/iggant), [Jared Norman](https://github.com/jarednorman)
+
+## 2.4.1
+
+* [#435](https://github.com/rubysherpas/paranoia/pull/435) Monkeypatch activerecord relations to work with rails 5.2.0
+
+  [Bartosz Bonisławski (@bbonislawski)](https://github.com/bbonislawski)
+
+## 2.4.0
+
+* [#423](https://github.com/rubysherpas/paranoia/pull/423) Add `paranoia_destroy` and `paranoia_delete` aliases
+
+  [John Hawthorn (@jhawthorn)](https://github.com/jhawthorn)
+
+* [#408](https://github.com/rubysherpas/paranoia/pull/408) Fix instance variable `@_disable_counter_cache` not initialized warning.
+
+  [Akira Matsuda (@amatsuda)](https://github.com/amatsuda)
+
+* [#412](https://github.com/rubysherpas/paranoia/pull/412) Fix `really_destroy!` behavior with `sentinel_value`
+
+  [Steve Rice (@steverice)](https://github.com/steverice)
+
 ## 2.3.1
 
 * [#397](https://github.com/rubysherpas/paranoia/pull/397) Bump active record max version to support 5.1 final
